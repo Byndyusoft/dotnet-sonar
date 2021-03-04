@@ -11,7 +11,7 @@ ENV SONAR_SCANNER_MSBUILD_VERSION=5.0.4.24009 \
     DOCKER_VERSION=5:19.03.13~3-0~debian-buster \
     CONTAINERD_VERSION=1.3.7-1 \
     OPENJDK_VERSION=11
-
+	
 # Linux update
 RUN apt-get update \
     && apt-get dist-upgrade -y \
@@ -23,11 +23,13 @@ RUN apt-get update \
         software-properties-common
 
 # Install Java
+RUN mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1
 RUN apt-get install -y openjdk-$OPENJDK_VERSION-jre
 
 
 # Install Sonar Scanner
 RUN dotnet tool install --global dotnet-sonarscanner
+ENV PATH=$PATH:/root/.dotnet/tools
 
 # Cleanup
 RUN apt-get -q autoremove \
